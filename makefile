@@ -1,0 +1,11 @@
+.PHONY: lint fmt all
+# === Ruff ===
+
+lint:
+	poetry run ruff check
+
+fmt:
+	poetry run ruff check --fix
+
+all: fmt lint
+
