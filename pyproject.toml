@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "intelligent-job-recommendation-system"
+version = "0.1.0"
+description = ""
+authors = []
+readme = "README.md"
+packages = [{include = "intelligent_job_recommendation_system"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.32.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
