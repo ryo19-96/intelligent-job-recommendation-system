@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "intelligent-job-recommendation-system"
+version = "0.1.0"
+description = ""
+authors = []
+readme = "README.md"
+packages = [{include = "intelligent_job_recommendation_system"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.32.4"
+ruff = "^0.11.13"
+mypy = "^1.16.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+lint.select = ["ALL"]
+exclude = [
+    "notebooks/*.ipynb",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+strict = true
+# エラー表示を詳しくする
+show_error_codes = true
+# Pythonバージョンを指定
+python_version = "3.10"
