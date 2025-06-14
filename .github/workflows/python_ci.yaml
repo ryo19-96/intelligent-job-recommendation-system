@@ -18,16 +18,13 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install Poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-
       - name: Install dependencies
-        run: poetry install --no-interaction --no-root
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy 
 
       - name: Lint with ruff
-        run: poetry run ruff .
+        run: ruff check .
 
       - name: Type-check with mypy
-        run: poetry run mypy .
+        run: mypy .
