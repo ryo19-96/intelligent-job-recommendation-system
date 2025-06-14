@@ -9,7 +9,7 @@ env:
   PROJECT_NUMBER: ${{ secrets.PROJECT_NUMBER_DEV }}
 
 jobs:
-  terraform:
+  terraform_check:
     runs-on: ubuntu-latest
 
     permissions:
