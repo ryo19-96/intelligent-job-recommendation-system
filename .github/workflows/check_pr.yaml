@@ -40,11 +40,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Show OIDC claims
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: "id_token"           # ← access_token だと decode できない
+          audience: "//iam.googleapis.com/projects/918908684529/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
+        id: oidc
+
+      - run: |
+          echo "${{ steps.oidc.outputs.id_token }}" | cut -d'.' -f2 | base64 -d
+
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          token_format: "id_token"
+          token_format: "access_token"
           project_id: ${{ secrets.PROJECT_ID_DEV }}
           workload_identity_provider: >-
             projects/${{ secrets.PROJECT_NUMBER_DEV }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions
