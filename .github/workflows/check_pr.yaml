@@ -1,4 +1,4 @@
-name: Terraform Check
+name: PR Check
 
 on:
   pull_request:
@@ -44,11 +44,11 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           token_format: "access_token"
-          project_id: ${{ secrets.PROJECT_ID }}
+          project_id: ${{ secrets.PROJECT_ID_DEV }}
           workload_identity_provider: >-
-            projects/${{ secrets.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions
+            projects/${{ secrets.PROJECT_NUMBER_DEV }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions
           service_account: >-
-            github-actions-001@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com
+            github-actions-001@${{ secrets.PROJECT_ID_DEV }}.iam.gserviceaccount.com
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
