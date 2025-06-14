@@ -27,6 +27,7 @@ jobs:
           project_id: intelligent-job-rec-dev
           workload_identity_provider: "projects/918908684529/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
           service_account: "github-actions-001@intelligent-job-rec-dev.iam.gserviceaccount.com"
+          audience: "//iam.googleapis.com/projects/918908684529/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
