@@ -1,8 +1,9 @@
 name: PR Check
 
 on:
-  pull_request_target:
-    branches: [ main ]
+  # pull_request_target:
+  #   branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -40,12 +41,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Show OIDC claims
+      - name: Authenticate
+        id: auth
         uses: google-github-actions/auth@v2
         with:
-          token_format: "id_token"           # ← access_token だと decode できない
+          token_format: "id_token"
+          project_id: intelligent-job-rec-dev
+          workload_identity_provider: projects/918908684529/locations/global/workloadIdentityPools/github-actions/providers/github-actions
+          service_account: github-actions-001@intelligent-job-rec-dev.iam.gserviceaccount.com
           audience: "//iam.googleapis.com/projects/918908684529/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
-        id: oidc
 
       - run: |
           echo "${{ steps.oidc.outputs.id_token }}" | cut -d'.' -f2 | base64 -d
