@@ -24,9 +24,9 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          project_id: ${{ secrets.PROJECT_ID_DEV }}
-          workload_identity_provider: "projects/${{ secrets.PROJECT_NUMBER_DEV }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
-          service_account: "github-actions-001@${{ secrets.PROJECT_ID_DEV }}.iam.gserviceaccount.com"
+          project_id: intelligent-job-rec-dev
+          workload_identity_provider: "projects/918908684529/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
+          service_account: "github-actions-001@intelligent-job-rec-dev.iam.gserviceaccount.com"
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
