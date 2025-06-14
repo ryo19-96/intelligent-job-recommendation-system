@@ -1,0 +1,49 @@
+name: Terraform Check
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  PROJECT_ID: ${{ secrets.PROJECT_ID_DEV }}
+  PROJECT_NUMBER: ${{ secrets.PROJECT_NUMBER_DEV }}
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ env.PROJECT_ID_DEV }}
+          workload_identity_provider: "projects/${{ env.PROJECT_NUMBER_DEV }}/locations/global/workloadIdentityPools/github-pool/providers/github-actions"
+          service_account: "github-actions-001@${{ env.PROJECT_ID_DEV }}.iam.gserviceaccount.com"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.11.4
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
