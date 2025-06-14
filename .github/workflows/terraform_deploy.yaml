@@ -4,29 +4,27 @@ on:
   push:
     branches: [ main ]
 
-  workflow_run:
-    workflows: ["Terraform Check"]
-    types:
-      - completed
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   terraform_deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
-    permissions:
-      id-token: write
-      contents: read
-
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          project_id: ${{ secrets.PROJECT_ID_DEV }}
-          workload_identity_provider: "projects/${{ secrets.PROJECT_NUMBER_DEV }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions"
-          service_account: "github-actions-001@${{ secrets.PROJECT_ID_DEV }}.iam.gserviceaccount.com"
+          token_format: "access_token"
+          project_id: ${{ secrets.PROJECT_ID }}
+          workload_identity_provider: >-
+            projects/${{ secrets.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions
+          service_account: >-
+            github-actions-001@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

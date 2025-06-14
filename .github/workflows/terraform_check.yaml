@@ -19,18 +19,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
         with:
           token_format: "access_token"
-          project_id: intelligent-job-rec-dev
+          project_id: ${{ secrets.PROJECT_ID }}
           workload_identity_provider: >-
-            projects/918908684529/locations/global/workloadIdentityPools/github-actions/providers/github-actions
+            projects/${{ secrets.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions
           service_account: >-
-            github-actions-001@intelligent-job-rec-dev.iam.gserviceaccount.com
+            github-actions-001@${{ secrets.PROJECT_ID }}.iam.gserviceaccount.com
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
